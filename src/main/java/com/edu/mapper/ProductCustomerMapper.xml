@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.mapper.ProductCustomerMapper">
+    
+    <sql id="productCondition">
+    <if test="productCustomer !=null">
+       <if test="productCustomer.title !=null and productCustomer.title !='' ">
+          title like '%${productCustomer.title }%'
+       </if>
+    </if>
+    </sql>
+    <select id="getByCondition" parameterType="ProductQuryVo" resultType="ProductCustomer">
+     select * from product
+     <where>
+        <include refid="productCondition"></include>
+     </where>
+ </select>
+    
+  
+	
+	<update id ="batchEdit">
+        update product
+   	   <set>
+   	   	  <trim prefix=" title = case " suffix="end," suffixOverrides=",">
+   	   	  	<foreach collection="list" item="item">
+   	   	  		when id=#{item.id} then #{item.title}
+   	   	  	</foreach>
+   	   	  </trim>
+   	   	  <trim prefix=" price = case " suffix="end," suffixOverrides=",">
+   	   	  	<foreach collection="list" item="item">
+   	   	  		when id=#{item.id} then #{item.price}
+   	   	  	</foreach>
+   	   	  </trim>
+   	   	  <trim prefix=" descs = case " suffix="end," suffixOverrides=",">
+   	   	  	<foreach collection="list" item="item">
+   	   	  		when id=#{item.id} then #{item.descs}
+   	   	  	</foreach>
+   	   	  </trim>
+   	   	  <trim prefix=" shelftime = case " suffix="end," suffixOverrides=",">
+   	   	  	<foreach collection="list" item="item">
+   	   	  		when id=#{item.id} then #{item.shelftime}
+   	   	  	</foreach>
+   	   	  </trim>
+   	   </set>
+   	   <where>
+   	   		id in 
+   	   		<foreach collection="list" item="item" open="(" close=")" separator=",">
+   	   			#{item.id}
+   	   		</foreach>
+   	   </where>
+</update>
+
+<select id="getByIds"  resultType="ProductCustomer">
+     select * from product
+     <where>
+        id in 
+		<foreach collection="array" item="item" open="(" close=")" separator="," >
+		#{item }
+		</foreach>
+     </where>
+  </select>
+  
+  <delete id="bathDelete">
+	delete from product
+	<where>
+		id in
+		<foreach collection="array" item="item" open="(" close=")"
+			separator=",">
+			#{item }
+		</foreach>
+	</where>
+</delete>
+
+  
+</mapper>

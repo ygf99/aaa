@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  
+ <!-- jdbc的连接配置 -->
+  <!-- <context id="DB2Tables" targetRuntime="MyBatis3"> -->
+  <!-- 忽略注释 -->
+  <commentGenerator>
+  <property name="suppressAllComments" value="true" />
+</commentGenerator>
+  
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql:///321"
+        userId="root"
+        password="123456">
+    </jdbcConnection>
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+  <!-- 反向bean的位置 -->
+  <!-- targetProject 你反向的对象 所存放的位置 -->
+    <javaModelGenerator targetPackage="com.edu.bean" targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+  <!-- 反向生成的mapper文件的存放位置 -->
+    <sqlMapGenerator targetPackage="com.edu.mapper"  targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+    <!-- 反向生成的mapper接口的存放位置 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.edu.mapper"  targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+   <!-- 哪些表要反向生成 -->
+   <!-- <table tableName="appointment" domainObjectName="Appointment"></table>
+    <table tableName="dept" domainObjectName="Dept"></table>
+     <table tableName="hospital" domainObjectName="Hospital"></table>
+     <table tableName="hospital_dept" domainObjectName="hospitaDept"></table>
+      <table tableName="mediciner" domainObjectName="mediciner"></table>
+        <table tableName="tbl_user" domainObjectName="tblUser"></table> -->
+      
+
+
+  </context>
+</generatorConfiguration>
